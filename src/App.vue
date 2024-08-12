@@ -1,10 +1,44 @@
 <template >
-<!-- <div id="app_header" class="header"> <AppHeader /> </div> -->
+<!-- <div style="background-color: aqua; width: 100vw;"> <AppHeader /> </div> -->
+<div id="app_header" class="header"> <AppHeader /> </div>
 
-<div style="background-color: aqua; width: 100vw; height: 15vh;"> <AppHeader /> </div>
-<div id="body" style="background-color: burlywood; width: 100vw; min-height: 70vh;"></div>
-<dev style="background-color: aqua; width: 100vw; height: 15vh;"> <AppFooter /> </dev>
 
+<!-- <div id="body" style="background-color: burlywood; width: 100vw; min-height: 80vh;"></div> -->
+<div id="body" class="body">
+  <!-- <button @click="getScrollView(this.scrollView-1)" style="padding: 2vh 0 2vh 0; height: 20vh;" v-show="scrollView > 0"> 
+      <svg 
+      class="icon" 
+      viewBox="0 0 122 40" 
+      fill="#E0DFE7"
+      xmlns="http://www.w3.org/2000/svg">
+      <path id="1e48b6e4" d="M5.05151 30.41L59.6946 3.55949C61.39 2.72643 63.3787 2.74039 65.0621 3.59717L117.796 30.4351C121.544 32.3426 120.188 38 115.982 38L6.81556 38C2.57964 38 1.24977 32.2781 5.05151 30.41Z" fill="#4D576C" stroke="#E0DFE7" stroke-width="4">
+      </path>
+      </svg>
+    </button> -->
+
+    <div id="app"  ref="block" style="display: flex ; flex-direction: row; align-items: top; min-height: 70vh; position: sticky;">
+        <div class="component-body">
+          <component :is="titleComponent" v-bind="this[propsTitle]" @sendData="getData" ></component>
+        </div>
+
+
+        <div class="scroll-body">  
+              <div v-for="item in pagNum" :key="item" class="scroll-item">
+                <div style="margin: 15px 5px 15px 5px;">
+                  <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle v-if = "(item-1) == scrollView" id="496b537c" cx="6" cy="6" r="5.5" transform="rotate(-90 6 6)" fill="#E0DFE7" stroke="#31344B"></circle>
+                      <circle v-else id="0adf4dea" cx="6" cy="6" r="6" transform="rotate(-90 6 6)" fill="#31344B"> </circle>
+                    </svg>
+                </div>
+         </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div style="background-color: aqua; width: 100vw;"> <AppFooter /> </div>
 <!-- <div id="footer" class="footer"> <AppFooter /> </div> -->
 
 </template>
