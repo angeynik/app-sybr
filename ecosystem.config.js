@@ -1,23 +1,31 @@
 module.exports = {
-  serverhttp : [{
-    script: 'dist/http-server',
-    watch: 'dist',
-watch_delay: 5000
-  }, {
-    script: './service-worker/',
-    watch: ['./service-worker']
-  }],
-
-  deploy : {
-    production : {
-      user : 'SSH_USERNAME',
-      host : 'SSH_HOSTMACHINE',
-      ref  : 'origin/master',
-      repo : 'GIT_REPOSITORY',
-      path : 'DESTINATION_PATH',
-      'pre-deploy-local': '',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production',
-      'pre-setup': ''
-    }
-  }
+    backserv: [
+        {
+            name: 'severapp',
+            script: './serverapp.js',
+            watch: ['server-sybr'],
+            ignore_watch: ['node_modules', '.gitignore'],
+            watch_delay: 5000,
+            env: {
+                NODE_ENV: 'development',
+            },
+            env_production: {
+                NODE_ENV: 'production',
+            },
+        },
+    ],
+    frontserv: [
+        {
+            name: 'webapp',
+            script: 'webApp/app-sybr/dist/http-server',
+            watch: ['webApp/app-sybr/dist'],
+            watch_delay: 5000,
+            env: {
+                NODE_ENV: 'development',
+            },
+            env_production: {
+                NODE_ENV: 'production',
+            },
+        },
+    ],
 };
