@@ -311,50 +311,50 @@ getTitleComponent(){ // Переключаем компоненты по соб�
         this.propsTitle = 'propsAppWelcome';
         this.flagScrollDown = true;
         localStorage.setItem('flagScrollDown', true);
-        // console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
+        console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
         return;
       } else if (this.titleComponent === 'AppProjectOrder') {
         this.propsTitle = 'propsAppProjectOrder';
         this.flagScrollDown = true;
         localStorage.setItem('flagScrollDown', true);
-        // console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
+        console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
         return;
       } else if (this.titleComponent === 'AppProductAssemble') {
         this.propsTitle = 'propsAppProductAssemble';
         this.flagScrollDown = true;
         localStorage.setItem('flagScrollDown', true);
-        // console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
+        console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
         return;
       } else if (this.titleComponent === 'AppSelectOptions') {
         this.propsTitle = 'propsAppSelectOptions';
         this.flagScrollDown = false;
         localStorage.setItem('flagScrollDown', false);
-        // console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
+        console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
         return;
       } else if (this.titleComponent === 'AppCheck') {
         this.propsTitle = 'propsAppCheck';
         this.flagScrollDown = false;
         localStorage.setItem('flagScrollDown', false);
-        // console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
+        console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
         return;
       } else if (this.titleComponent === 'AppFormOrder') {
         this.propsTitle = 'propsAppFormOrder';
         this.flagScrollDown = false;
         localStorage.setItem('flagScrollDown', false);
-        // console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
+        console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
         return;
       } else if (this.titleComponent === 'AppThanks') {
         this.propsTitle = 'propsAppThanks';
         this.flagScrollDown = true;
         localStorage.setItem('flagScrollDown', true);
-        // console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
+        console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
         return;
       } else {
         this.titleComponent === 'AppError';
         this.propsTitle = 'propsAppError';
         this.flagScrollDown = true;
         localStorage.setItem('flagScrollDown', true);
-        // console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
+        console.log('Функция getTitleComponent - flagScrollDown = ', this.flagScrollDown);
       }
     } catch (error) {
     console.error('getTitleComponent - Ошибка при переключении компонента: ', error);
@@ -372,7 +372,7 @@ handleScroll() {
   // console.log('flagScrollView - ', this.flagScrollView, 'flagScrollDown - ', this.flagScrollDown);
     if (this.flagScrollView) {
         if (this.flagScrollDown) {
-          const windowHeight = window.innerHeight;
+        const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
         const scrollPosition = window.scrollY;
         // console.log('windowHeight: ', windowHeight, 'documentHeight', documentHeight, 'scrollPosition', scrollPosition);
