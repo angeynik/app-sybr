@@ -7,10 +7,13 @@
     <p> © 2024 все права защищены </p>
   <!-- </div> -->
   </div>
+  <p> UIID: {{ user }} </p>
 </template>
 
 <script>
-
+export default {
+  props: ['user'],
+}
 </script> 
 
 <style scoped>

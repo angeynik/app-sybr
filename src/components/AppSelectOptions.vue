@@ -218,19 +218,19 @@ computed: {
   methods: {
 
   async initData (key) {
-      // console.log(key);
+      console.log('AppSelectOptions: ', key);
       const response = await axios.get(this.clientURL + '/option', {
         headers: {
           'title': key, 
         }
       });
-        // console.log ('ответ сервера: ', response);
+        console.log ('ответ сервера: ', response);
         if (key === 1) {
         this.mainopts = Object.values(response.data); // преобразуем масив из объекта
-        // console.log ('this.mainopts: ', this.mainopts);
+        console.log ('преобразуем масив из объекта  - this.mainopts: ', this.mainopts);
       } else if (key === 2) {
         this.addopts = Object.values(response.data); // преобразуем масив из объекта
-        // console.log ('this.addopts: ', this.addopts);
+        console.log ('преобразуем масив из объекта - this.addopts: ', this.addopts);
       } else {
         console.log('Параметр для initData не определен');
       }
@@ -241,10 +241,10 @@ computed: {
         this.selectedType = 1;
       } else {
         const module = this.MODULS.find(m => m.id === this.selectedModul);
-      //  console.log ('Инициализация initData - module: ', module);
+       console.log ('Инициализация initData - module: ', module);
       this.updateArray (this.selectedModuls, module, this.selectedType, []);
       this.updateArray (this.allAddOpts, module, this.selectedType, []);
-        // console.log('Инициализация initData - selectedModuls: ', this.selectedModuls);
+        console.log('Инициализация initData - selectedModuls: ', this.selectedModuls);
       }
   },
 
@@ -255,28 +255,28 @@ computed: {
       let id_modul = this.selectedModul;
       let id_type = this.selectedType;
       const configEntry = objConfig.find(entry => entry.id_modul === id_modul && entry.id_type === id_type);
-    // console.log('результат поиска по объету CONFIG ', configEntry);
+    console.log('результат поиска по объету CONFIG ', configEntry);
 
     if (configEntry && configEntry.mainf) { // проверяем есть ли массив mainf в найденном объекте
       mainfSelected = Object.values(configEntry.mainf); // Object.values преобразует прокси объект в массив
-      // console.log('массив Mainf сформирован', mainfSelected);
+      console.log('массив Mainf сформирован', mainfSelected);
     } else {
       // Обработка случая, когда соответствующий массив не найден
       console.error(' массив Mainf не найден');
     }
     if (configEntry && configEntry.addf) { // проверяем есть ли массив addf в найденном объекте
       addfSelected = Object.values(configEntry.addf);
-      // console.log('массив Addf сформирован', addfSelected);
+      console.log('массив Addf сформирован', addfSelected);
     } else {
       // Обработка случая, когда соответствующий массив не найден
       console.error('массив Addf не найден');
     }
 
     this.mainopts = arrFunc.filter(f => f && mainfSelected.includes(f.id));
-    // console.log('mainopts: ', this.mainopts);
+    console.log('mainopts: ', this.mainopts);
 
     this.addopts = arrFunc.filter(f => f && addfSelected.includes(f.id));
-    // console.log('addopts: ', this.addopts);
+    console.log('addopts: ', this.addopts);
 },
 
 
@@ -289,13 +289,13 @@ computed: {
       const checkIdselectedModulsM = this.checkIndex(this.selectedModuls, this.selectedModul, 'id');
       const checkIdAllAddOptsT = this.checkIndex(this.allAddOpts.filter(item => item.id === this.selectedModul), type, 'type');
       const index = this.selectedList.indexOf(id);
-      // console.log('Выбрана функция ', index, id);
+      console.log('toggleAddOpt - Выбрана функция: ', index, id);
       if (index >= 0) {
         this.selectedList.splice(index, 1);
 
        this.titleSelectedListAdd = (Object.values(this.FUNC.filter(f => f && this.selectedList.includes(f.id)))).map(item => {return {id: item.id, title: item.title}});
         
-        // console.log('Дополнительные функции Удалены id : title - ', this.titleSelectedListAdd);
+        console.log('toggleAddOpt - Дополнительные функции Удалены id : title - ', this.titleSelectedListAdd);
 
         this.allAddOpts[checkIdAllAddOptsT].opts = Object.values(this.selectedList);
         this.selectedModuls[checkIdselectedModulsM].opts = Object.values(this.selectedList);

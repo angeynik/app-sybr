@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="block_title_left"> 
-          ICON - UIID: {{ user }}
+          ICON
         </div>
 
         <div class="block_title_right">

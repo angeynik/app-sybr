@@ -8,7 +8,7 @@
     <div id="app"  ref="block" style="display: flex ; flex-direction: row; align-items: top; min-height: 70vh; position: sticky;">
         <div class="component-body">
           <!-- <component :is="titleComponent" v-bind="this[propsTitle]" @sendData="getData" ></component> -->
-          <component :is="titleComponent" v-bind="this.AppWelcome" @sendData="getData" ></component>         
+          <component :is="titleComponent" v-bind="this[propsTitle]" @sendData="getData" ></component>         
         </div>
         
 
