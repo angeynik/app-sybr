@@ -4,22 +4,13 @@
 
 <!-- <div id="body" style="background-color: burlywood; width: 100vw; min-height: 80vh;"></div> -->
 <div id="body" class="body">
-  <!-- <button @click="getScrollView(this.scrollView-1)" style="padding: 2vh 0 2vh 0; height: 20vh;" v-show="scrollView > 0"> 
-      <svg 
-      class="icon" 
-      viewBox="0 0 122 40" 
-      fill="#E0DFE7"
-      xmlns="http://www.w3.org/2000/svg">
-      <path id="1e48b6e4" d="M5.05151 30.41L59.6946 3.55949C61.39 2.72643 63.3787 2.74039 65.0621 3.59717L117.796 30.4351C121.544 32.3426 120.188 38 115.982 38L6.81556 38C2.57964 38 1.24977 32.2781 5.05151 30.41Z" fill="#4D576C" stroke="#E0DFE7" stroke-width="4">
-      </path>
-      </svg>
-    </button> -->
 
     <div id="app"  ref="block" style="display: flex ; flex-direction: row; align-items: top; min-height: 70vh; position: sticky;">
         <div class="component-body">
-          <component :is="titleComponent" v-bind="this[propsTitle]" @sendData="getData" ></component>
+          <!-- <component :is="titleComponent" v-bind="this[propsTitle]" @sendData="getData" ></component> -->
+          <component :is="titleComponent" v-bind="this.AppWelcome" @sendData="getData" ></component>         
         </div>
-
+        
 
         <div class="scroll-body">  
               <div v-for="item in pagNum" :key="item" class="scroll-item">
@@ -45,11 +36,18 @@
 
 <script>
 import axios from 'axios';
+// Устанавливаем базовый URL для всех запросов
+axios.defaults.baseURL = process.env.SERVER_URL;
+// axios.defaults.baseURL = 'http://localhost:2025';
+// Добавляем заголовки CORS
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'; // Разрешаем доступ со всех доменов
+axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'; // Разрешенные методы
+axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type'; // Разрешенные заголовки
 
 // import HelloWorld from './components/HelloWorld.vue'
 // import AppIcons from './components/AppIcons.vue';
 import AppHeader from './components/AppHeader.vue';
-// import AppWelcome from './components/AppWelcome.vue';
+import AppWelcome from './components/AppWelcome.vue';
 // import AppProjectOrder from './components/AppProjectOrder.vue';
 // import AppProductAssemble from './components/AppProductAssemble.vue';
 // import AppSelectOptions from './components/AppSelectOptions.vue';
@@ -63,7 +61,7 @@ name: 'App',
 components: {
   // AppIcons,
   AppHeader, 
-  // AppWelcome, 
+  AppWelcome, 
   // AppProjectOrder, 
   // AppProductAssemble, 
   // AppSelectOptions, 
@@ -101,6 +99,8 @@ return {
   
   //clientURL: 'http://129.47.1.60:2025',
   clientURL: process.env.SERVER_URL || 'http://129.47.1.60:2025',
+  // clientURL: 'http://localhost:2025',
+  // clientURL: process.env.SERVER_URL,
   uuid: localStorage.getItem('uuid') || null,
   moduls: [],
   types: [],
@@ -178,9 +178,8 @@ user: null
 },
 created() {
 this.fetchUUID();
+this.fetchTables();
 
-
-// this.fetchTables();
 // this.fetchConfig();
 // this.customerOrder = localStorage.getItem('order');
 // window.addEventListener('scroll', this.handleScroll);
@@ -221,7 +220,48 @@ methods: {
     console.error('Ошибка при получении uuid:', error);
   }
 },
-
+async fetchTables() {
+  for (const table of this.tableList) {
+    try {
+      const response = await axios.get(this.clientURL + `/init/${table}`);
+      switch (table) {
+        case 'gr_functions':
+          this.moduls = JSON.parse(response.data); // преобразуем из json
+          console.log(table, 'получена успешно ', this.moduls);
+         
+          break;
+        case 'gr_functionstypes':
+          this.types = JSON.parse(response.data); // преобразуем из json
+          console.log(table, 'получена успешно ', this.types);
+          break;
+        case 'functions':
+          this.functions = JSON.parse(response.data); // преобразуем из json
+          console.log(table, 'получена успешно ', this.functions);
+          break;
+          case 'configures':
+          this.config = JSON.parse(response.data); // преобразуем из json
+          console.log(table, 'получена успешно');
+          break;
+          case 'dict_descr_mod':
+          this.dict_descr_mod = JSON.parse(response.data); // преобразуем из json
+          console.log(table, 'получена успешно', this.dict_descr_mod);
+          break;
+        default:
+          this.class = JSON.parse(response.data); // преобразуем из json
+          console.log(table, 'получена успешно');
+      }
+    } catch (error) {
+      console.error(`Ошибка при получении данных из ${table}: `, error);
+    }
+  }
+},
+async fetchConfig () {
+    // Первая часть - Получам объект со всеми возможными конфигурациями из DB 
+    const response = await axios.get(this.clientURL + `/config`);
+        const CONFIG = JSON.parse(response.data);
+        this.config = CONFIG; // преобразуем из json
+        console.log('Config получена успешно ', CONFIG);
+  },
 
 
 
@@ -397,48 +437,7 @@ async postCustomerData(arr) {
     }
   },
 
-  async fetchTables() {
-  for (const table of this.tableList) {
-    try {
-      const response = await axios.get(this.clientURL + `/init/${table}`);
-      switch (table) {
-        case 'gr_functions':
-          this.moduls = JSON.parse(response.data); // преобразуем из json
-          // console.log(table, 'получена успешно ', this.moduls);
-         
-          break;
-        case 'gr_functionstypes':
-          this.types = JSON.parse(response.data); // преобразуем из json
-          // console.log(table, 'получена успешно ', this.types);
-          break;
-        case 'functions':
-          this.functions = JSON.parse(response.data); // преобразуем из json
-          // console.log(table, 'получена успешно ', this.functions);
-          break;
-          case 'configures':
-          this.config = JSON.parse(response.data); // преобразуем из json
-          // console.log(table, 'получена успешно');
-          break;
-          case 'dict_descr_mod':
-          this.dict_descr_mod = JSON.parse(response.data); // преобразуем из json
-          console.log(table, 'получена успешно', this.dict_descr_mod);
-          break;
-        default:
-          this.class = JSON.parse(response.data); // преобразуем из json
-          // console.log(table, 'получена успешно');
-      }
-    } catch (error) {
-      console.error(`Ошибка при получении данных из ${table}: `, error);
-    }
-  }
-},
-async fetchConfig () {
-    // Первая часть - Получам объект со всеми возможными конфигурациями из DB 
-    const response = await axios.get(this.clientURL + `/config`);
-        const CONFIG = JSON.parse(response.data);
-        this.config = CONFIG; // преобразуем из json
-        // console.log('Config получена успешно ', CONFIG);
-  },
+
 
 
   getData(mesage) {
