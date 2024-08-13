@@ -99,8 +99,8 @@ return {
   flagScrollView: true, // Флаг разрешения на смену компонента
   flagScrollDown: localStorage.getItem('scrollDown') || true, // Флаг разрешения скрола вниз (отображения кнопки вниз)
   
-  clientURL: 'http://129.47.1.60:2025',
-  //clientURL: process.env.SERVER_URL || 'http://localhost:2025',
+  //clientURL: 'http://129.47.1.60:2025',
+  clientURL: process.env.SERVER_URL || 'http://129.47.1.60:2025',
   uuid: localStorage.getItem('uuid') || null,
   moduls: [],
   types: [],
@@ -208,7 +208,7 @@ methods: {
         'title': 'Uuid', 
       }
     });
-    console.log('Отправляем запрос на сервер', response);
+    console.log('Получаем ответ с  сервера', response);
 
     this.uuid = response.data.uuid; // сохраняем uuid в локальной переменной
     localStorage.setItem('uuid', response.data.uuid);
