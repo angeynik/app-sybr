@@ -99,8 +99,8 @@ return {
   flagScrollView: true, // Флаг разрешения на смену компонента
   flagScrollDown: localStorage.getItem('scrollDown') || true, // Флаг разрешения скрола вниз (отображения кнопки вниз)
   
-  // clientURL: 'http://localhost:2025',
-  clientURL: process.env.SERVER_URL || 'http://localhost:2025',
+  clientURL: 'http://129.47.1.60:2025',
+  //clientURL: process.env.SERVER_URL || 'http://localhost:2025',
   uuid: localStorage.getItem('uuid') || null,
   moduls: [],
   types: [],
@@ -199,7 +199,7 @@ methods: {
   async fetchUUID() { // Отправка запроса на создание uuid, проверка его существование в текущей сесии
   try {
     // this.uuid = localStorage.getItem('uuid');
-    if (this.uuid === null) {
+    if (this.uuid !== null) {
       console.log('UUID существует:', this.uuid);
     } else {
       console.log('UUID не существует - Отправляем запрос на сервер');
