@@ -199,7 +199,7 @@ methods: {
   async fetchUUID() { // Отправка запроса на создание uuid, проверка его существование в текущей сесии
   try {
     // this.uuid = localStorage.getItem('uuid');
-    if (this.uuid !== null) {
+    if (this.uuid === null) {
       console.log('UUID существует:', this.uuid);
     } else {
       console.log('UUID не существует - Отправляем запрос на сервер');
