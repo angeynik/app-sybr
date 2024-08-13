@@ -362,7 +362,7 @@ getTitleComponent(){ // Переключаем компоненты по соб�
 },
 
 handleScroll() {
-  console.log('', window);
+  // console.log('', window);
   // console.log('', window.clientInformation.geolocation);
   // console.log('', window.scrollbars);
   // console.log('', window.top);
@@ -452,7 +452,7 @@ async postCustomerData(arr) {
             let flag = false;
             // let funcMainDescr;
             const configEntry = this.config.find(entry => entry.id_modul === element.id && entry.id_type === element.type);
-            // console.log('Массив для функций для каждого объекта конфигурации :  ', configEntry);
+            console.log('Массив для функций для каждого объекта конфигурации :  ', configEntry);
 
               // Дополнительные функции
             // const funcAddDescr = (this.functions.filter(f => f && element.opts.includes(f.id)).map(item => {return {id: item.id, title: item.title}}));
@@ -495,7 +495,7 @@ async postCustomerData(arr) {
             });
             this.flagAppCheck = true;
             this.postCustomerData(this.customerSelect);
-            // console.log('updateArray -- Добавили новую запись: ', this.customerSelect);
+            console.log('updateArray -- Добавили новую запись: ', this.customerSelect);
           });
           this.flagScrollDown = true;
           localStorage.setItem('flagScrollDown', true);
