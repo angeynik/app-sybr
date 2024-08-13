@@ -1,7 +1,6 @@
 <template >
 <!-- <div style="background-color: aqua; width: 100vw;"> <AppHeader /> </div> -->
-<div id="app_header" class="header"> <AppHeader /> </div>
-
+<div id="app_header" class="header"> <AppHeader v-bind:user="uuid"/> </div>
 
 <!-- <div id="body" style="background-color: burlywood; width: 100vw; min-height: 80vh;"></div> -->
 <div id="body" class="body">
@@ -102,7 +101,7 @@ return {
   
   // clientURL: 'http://localhost:2025',
   clientURL: process.env.SERVER_URL || 'http://localhost:2025',
-  uuid: null,
+  uuid: localStorage.getItem('uuid') || null,
   moduls: [],
   types: [],
   functions: [],
@@ -179,22 +178,65 @@ user: null
 },
 created() {
 this.fetchUUID();
-this.fetchTables();
-this.fetchConfig();
-this.customerOrder = localStorage.getItem('order');
-window.addEventListener('scroll', this.handleScroll);
+
+
+// this.fetchTables();
+// this.fetchConfig();
+// this.customerOrder = localStorage.getItem('order');
+// window.addEventListener('scroll', this.handleScroll);
 // console.log('Инициализируем addEventListener', this.handleScroll, scroll); // Для отслеживания scroll
-this.pagNum = this.listComponents.length;
-console.log('paginationNumber: ', this.pagNum);
-this.scrollView = 0;
-this.flagScrollView = true;
-localStorage.setItem('flagScrollDown', true);
+// this.pagNum = this.listComponents.length;
+// console.log('paginationNumber: ', this.pagNum);
+// this.scrollView = 0;
+// this.flagScrollView = true;
+// localStorage.setItem('flagScrollDown', true);
 },
 unmounted() {
- window.removeEventListener('scroll', this.handleScroll);
+//  window.removeEventListener('scroll', this.handleScroll);
 },
 
 methods: {
+  async fetchUUID() { // Отправка запроса на создание uuid, проверка его существование в текущей сесии
+  try {
+    // this.uuid = localStorage.getItem('uuid');
+    if (this.uuid !== null) {
+      console.log('UUID существует:', this.uuid);
+    } else {
+      console.log('UUID не существует - Отправляем запрос на сервер');
+      const response = await axios.get(this.clientURL + '/req', {
+      headers: {
+        'title': 'Uuid', 
+      }
+    });
+    console.log('Отправляем запрос на сервер', response);
+
+    this.uuid = response.data.uuid; // сохраняем uuid в локальной переменной
+    localStorage.setItem('uuid', response.data.uuid);
+    console.log('UUID создан:',this.uuid);
+    this.customerOrder = response.data.order;
+    localStorage.setItem('order', response.data.order);
+    console.log('Номер заказа:',this.customerOrder);
+    }
+  } catch (error) {
+    console.error('Ошибка при получении uuid:', error);
+  }
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   getScrollView(scrollView) {
     // console.log('Получен запрос на обновления компонента scrollView - ', scrollView);
     if (this.flagScrollView === true) {
@@ -207,7 +249,7 @@ methods: {
   window.scrollTo(0, 10);
   this.timeOut(this.scrollDalay);
     } else {
-      console.log('getScrollView - Обновление компонента запрещено');
+      // console.log('getScrollView - Обновление компонента запрещено');
     }
 
 },
@@ -215,7 +257,7 @@ timeOut(time) {
   setTimeout(() => {
     this.flagScrollView = true;
     // return window.scrollDalay;
-    console.log('Возвращаем флаг разрешения на обновление компонента в значение - ', this.flagScrollView );
+    // console.log('Возвращаем флаг разрешения на обновление компонента в значение - ', this.flagScrollView );
   }, time);
 },
 
@@ -296,8 +338,8 @@ getTitleComponent(){ // Переключаем компоненты по соб�
 handleScroll() {
   console.log('', window);
   // console.log('', window.clientInformation.geolocation);
-  console.log('', window.scrollbars);
-  console.log('', window.top);
+  // console.log('', window.scrollbars);
+  // console.log('', window.top);
   // console.log('', window.scrollbars);
 
   // console.log('handleScroll RUN');
@@ -307,12 +349,12 @@ handleScroll() {
           const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
         const scrollPosition = window.scrollY;
-        console.log('windowHeight: ', windowHeight, 'documentHeight', documentHeight, 'scrollPosition', scrollPosition);
+        // console.log('windowHeight: ', windowHeight, 'documentHeight', documentHeight, 'scrollPosition', scrollPosition);
             if (scrollPosition + windowHeight >= documentHeight) {
               this.getScrollView(this.scrollView + 1);
               return;
             }  else {
-              console.log('handleScroll - Условие  scrollPosition + windowHeight >= documentHeight  не выполнено');
+              // console.log('handleScroll - Условие  scrollPosition + windowHeight >= documentHeight  не выполнено');
             }
             if (scrollPosition === 0) {
               this.getScrollView(this.scrollView - 1);
@@ -321,7 +363,7 @@ handleScroll() {
         } 
 
     } else {
-      console.log('handleScroll - Запрещено обновление компонента');
+      // console.log('handleScroll - Запрещено обновление компонента');
     }
 
 
@@ -332,29 +374,7 @@ handleScroll() {
   },
 
 
-async fetchUUID() { // Отправка запроса на создание uuid, проверка его существование в текущей сесии
-  try {
-    this.uuid = localStorage.getItem('uuid');
-    if (this.uuid !== null) {
-      console.log('UUID существует:', this.uuid);
-    } else {
-      const response = await axios.get(this.clientURL + '/req', {
-      headers: {
-        'title': 'Uuid', 
-      }
-    });
 
-    this.uuid = response.data.uuid; // сохраняем uuid в локальной переменной
-    localStorage.setItem('uuid', response.data.uuid);
-    console.log('UUID создан:',this.uuid);
-    this.customerOrder = response.data.order;
-    localStorage.setItem('order', response.data.order);
-    console.log('Номер заказа:',this.customerOrder);
-    }
-  } catch (error) {
-    console.error('Ошибка при получении uuid:', error);
-  }
-},
 
 async postCustomerData(arr) {
   try {
