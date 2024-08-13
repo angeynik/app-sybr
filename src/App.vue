@@ -48,9 +48,9 @@ axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type'; 
 // import AppIcons from './components/AppIcons.vue';
 import AppHeader from './components/AppHeader.vue';
 import AppWelcome from './components/AppWelcome.vue';
-// import AppProjectOrder from './components/AppProjectOrder.vue';
+import AppProjectOrder from './components/AppProjectOrder.vue';
 // import AppProductAssemble from './components/AppProductAssemble.vue';
-// import AppSelectOptions from './components/AppSelectOptions.vue';
+import AppSelectOptions from './components/AppSelectOptions.vue';
 // import AppCheck from './components/AppCheck.vue';
 // import AppFormOrder from './components/AppFormOrder.vue';
 // import AppThanks from './components/AppThanks.vue';
@@ -62,9 +62,9 @@ components: {
   // AppIcons,
   AppHeader, 
   AppWelcome, 
-  // AppProjectOrder, 
+  AppProjectOrder, 
   // AppProductAssemble, 
-  // AppSelectOptions, 
+  AppSelectOptions, 
   // AppCheck, 
   // AppFormOrder, 
   // AppThanks, 
@@ -179,19 +179,20 @@ user: null
 created() {
 this.fetchUUID();
 this.fetchTables();
+this.fetchConfig();
+this.customerOrder = localStorage.getItem('order');
 
-// this.fetchConfig();
-// this.customerOrder = localStorage.getItem('order');
-// window.addEventListener('scroll', this.handleScroll);
-// console.log('Инициализируем addEventListener', this.handleScroll, scroll); // Для отслеживания scroll
-// this.pagNum = this.listComponents.length;
-// console.log('paginationNumber: ', this.pagNum);
-// this.scrollView = 0;
-// this.flagScrollView = true;
-// localStorage.setItem('flagScrollDown', true);
+
+window.addEventListener('scroll', this.handleScroll);
+console.log('Инициализируем addEventListener', this.handleScroll, scroll); // Для отслеживания scroll
+this.pagNum = this.listComponents.length;
+console.log('paginationNumber: ', this.pagNum);
+this.scrollView = 0;
+this.flagScrollView = true;
+localStorage.setItem('flagScrollDown', true);
 },
 unmounted() {
-//  window.removeEventListener('scroll', this.handleScroll);
+ window.removeEventListener('scroll', this.handleScroll);
 },
 
 methods: {
@@ -262,21 +263,6 @@ async fetchConfig () {
         this.config = CONFIG; // преобразуем из json
         console.log('Config получена успешно ', CONFIG);
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   getScrollView(scrollView) {
     // console.log('Получен запрос на обновления компонента scrollView - ', scrollView);
     if (this.flagScrollView === true) {
@@ -412,6 +398,10 @@ handleScroll() {
     // console.log('Функция обработки движения колесика Мыши ЗАПУЩЕНА !!!', event.clientY, event.clientX);
     console.log('Функция обработки движения колесика Мыши ЗАПУЩЕНА !!!', 'event_vts', event._vts, 'clientY - ', event.clientY, 'delta Y - ', event.deltaY );
   },
+
+
+
+
 
 
 
