@@ -173,8 +173,6 @@
   // ['user', 'MODULS', 'TYPES', 'FUNC', 'CONFIG',],
 
   beforeCreate() {
-    // setTimeout(() => { debugger }, 2500);
-    // this.$emit('updateData', {selectedModul: this.selectedModul, selectedType: this.selectedType }); // Передаем в основной компонент выбранные модуль и тип 
 
   },
   created() {
@@ -184,36 +182,13 @@
     // console.log ('addops в момент создания: ', this.addopts);
     // console.log ('MODULS: ', this.MODULS);
   },
-  
-  
- watch: {
-  // selectedModul() { 
-  // this.$emit('updateData', {selectedAddOpts: this.selectedAddOpts,}); // Передаем в основной компонент выбранные модуль и тип 
-  // console.log(' ------- updateData -Modul-------');
-  // },
-  
-    // selectedModul(newVal) {
-  //   localStorage.setItem('selectedModul', newVal);
-  // },
-  // selectedType(newType) {
-  //   localStorage.setItem('selectedType', newType);
-  // }
-},
-
-// mounted: {
-
-// },
 
 computed: {
     selectedModuleDescription() {
       const selectedModule = this.MODULS.find((module) => module.id === this.selectedModul);
       return selectedModule ? selectedModule.text : '';
     },
-  //   selectedModulObject() {
-  //   return this.MODULS.find(modul => modul.id === this.selectedModul);
-  // }
   },
-  // emits: ['updateData'], // Событие emit вызываем при каждом обновлении массива выбора пользоватя - selectedAddOpts
  
   methods: {
 
