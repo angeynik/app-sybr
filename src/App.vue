@@ -51,9 +51,9 @@ import AppWelcome from './components/AppWelcome.vue';
 import AppProjectOrder from './components/AppProjectOrder.vue';
 // import AppProductAssemble from './components/AppProductAssemble.vue';
 import AppSelectOptions from './components/AppSelectOptions.vue';
-// import AppCheck from './components/AppCheck.vue';
-// import AppFormOrder from './components/AppFormOrder.vue';
-// import AppThanks from './components/AppThanks.vue';
+import AppCheck from './components/AppCheck.vue';
+import AppFormOrder from './components/AppFormOrder.vue';
+import AppThanks from './components/AppThanks.vue';
 import AppFooter from './components/AppFooter.vue';
 
 export default {
@@ -65,9 +65,9 @@ components: {
   AppProjectOrder, 
   // AppProductAssemble, 
   AppSelectOptions, 
-  // AppCheck, 
-  // AppFormOrder, 
-  // AppThanks, 
+  AppCheck, 
+  AppFormOrder, 
+  AppThanks, 
   AppFooter 
 },
 data() {

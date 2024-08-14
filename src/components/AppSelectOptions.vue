@@ -400,9 +400,10 @@ computed: {
     },
 
     checkIndex (arr, index, name) {
-      // console.log('Работа с CheckIndex: ', name);
+      console.log('Работа с CheckIndex: ', name);
+      console.log('Проверка наличия индекса - ', index, ' в массиве - ', arr);
       const res = arr.findIndex(m => m[name] === index); 
-      // console.log('--- Результат CheckIndex: ', res);
+      console.log('--- Результат CheckIndex: ', res);
       return res;
     },
     updateArray (arr, modul, type, opts) {
