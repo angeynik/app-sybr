@@ -127,23 +127,6 @@
     },
   data () {
     return {
-      testArray: [
-      {
-        opt: [1, 4, 12, 18],
-        modul: 'Безопасность',
-        type: 'Базовый'
-      },     
-      {
-        opt: [2, 6, 15, 29],
-        modul: 'Климат',
-        type: 'Расширенный'
-      },
-      {
-        opt: [5, 8, 13, 25],
-        modul: 'Свет',
-        type: 'Максимальный'
-      },
-    ],
       flagSelected: localStorage.getItem('flagSelected') || false,
       clientURL: 'http://localhost:2025',
       // clientHeader : '1',
@@ -173,11 +156,14 @@
   // ['user', 'MODULS', 'TYPES', 'FUNC', 'CONFIG',],
 
   beforeCreate() {
-
+    localStorage.setItem('selectedModul', 1);
+    localStorage.setItem('selectedType', 1);
   },
   created() {
     this.initData (1);// Запрос на сервер для определения первоначального набора ОСНОВНЫХ функций
     this.initData (2); // Запрос на сервер для определения первоначального набора ДОПОЛНИТЕЛЬНЫХ функций
+    this.selectedModul = localStorage.getItem('selectedModul') || 1;
+    this.selectedType = localStorage.getItem('selectedType') || 1;
     // console.log ('mainops в момент создания: ', this.mainopts);
     // console.log ('addops в момент создания: ', this.addopts);
     // console.log ('MODULS: ', this.MODULS);
@@ -222,8 +208,6 @@ computed: {
         console.log('Инициализация initData - selectedModuls: ', this.selectedModuls);
       }
   },
-
-
     sortFunction (objConfig, arrFunc) { // Метод формирует массив id функций соответствующих выбранному Модулю и Типу
       let mainfSelected = [];
       let addfSelected = [];
@@ -253,9 +237,6 @@ computed: {
     this.addopts = arrFunc.filter(f => f && addfSelected.includes(f.id));
     console.log('addopts: ', this.addopts);
 },
-
-
-    
     toggleAddOpt(id) { // Добавляет и удаляет в массив id выбранной функции
       const type = this.selectedType;
 
@@ -295,8 +276,6 @@ computed: {
 
       // console.log('Массив выбранных функций: ', this.selectedList);
     },
-
-
     finishSelect () {
       this.$emit('sendData', { title: "AppSelectOptions" , data: this.selectedModuls}); // Передаем в основной компонент массив выбранных пользователем модулей (this.selectedModuls) и наименование модуля; 
       this.flagSelect = !this.flagSelect;
@@ -373,7 +352,6 @@ computed: {
               }
           }
     },
-
     checkIndex (arr, index, name) {
       console.log('Работа с CheckIndex: ', name);
       console.log('Проверка наличия индекса - ', index, ' в массиве - ', arr);
@@ -390,8 +368,6 @@ computed: {
           opts: opts });
         // console.log('updateArray -- Добавили новую запись: ', arr);
     },
-
-
     removeModule(index) { // Удаляем запись выбранных пользователем Модуля и Типа
       this.selectedModuls.splice(index, 1);
       // this.$emit('updateData', this.selectedModuls); // Передаем в основной компонент массив выбранных пользователем модулей

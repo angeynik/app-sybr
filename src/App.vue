@@ -10,9 +10,8 @@
           <!-- <component :is="titleComponent" v-bind="this[propsTitle]" @sendData="getData" ></component> -->
           <component :is="titleComponent" v-bind="this[propsTitle]" @sendData="getData" ></component>         
         </div>
-        
-
-        <div class="scroll-body">  
+      
+        <!-- <div class="scroll-body">  
               <div v-for="item in pagNum" :key="item" class="scroll-item">
                 <div style="margin: 15px 5px 15px 5px;">
                   <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,14 +20,14 @@
                     </svg>
                 </div>
          </div>
-        </div>
+        </div> -->
     </div>
 
 
 </div>
 
 
-<div style="background-color: aqua; width: 100vw;"> <AppFooter /> </div>
+<div style="background-color: aqua; width: 100vw;"> <AppFooter v-bind:user="uuid"/> </div>
 <!-- <div id="footer" class="footer"> <AppFooter /> </div> -->
 
 </template>
