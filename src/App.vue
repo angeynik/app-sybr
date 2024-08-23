@@ -36,7 +36,7 @@
 <script>
 import axios from 'axios';
 // Устанавливаем базовый URL для всех запросов
-axios.defaults.baseURL = process.env.SERVER_URL;
+axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:2025';
 // axios.defaults.baseURL = 'http://localhost:2025';
 // Добавляем заголовки CORS
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'; // Разрешаем доступ со всех доменов
@@ -95,9 +95,11 @@ return {
   flagAppFormOrder_project: false, // Флаг разделяющий информацию в Компоненте AppFormOrder True - если делает запрос на персональный проект, False - если выбирает из текущих вариантов 
   flagScrollView: true, // Флаг разрешения на смену компонента
   flagScrollDown: localStorage.getItem('scrollDown') || true, // Флаг разрешения скрола вниз (отображения кнопки вниз)
-  
+ 
   //clientURL: 'http://129.47.1.60:2025',
-  clientURL: process.env.SERVER_URL || 'http://129.47.1.60:2025',
+  clientHost: process.env.VUE_APP_LOCAL || '129.47.1.60',
+  clientPort: process.env.VUE_APP_PORT || '2025',
+  clientURL: `http://${clientHost}:${clientPort}` || 'http://129.47.1.60',
   // clientURL: 'http://localhost:2025',
   // clientURL: process.env.SERVER_URL,
   uuid: localStorage.getItem('uuid') || null,
